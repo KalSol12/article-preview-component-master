@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Desktop Card Design</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <!-- === DESKTOP-ONLY HORIZONTAL CARD WITH SHARE TOOLTIP === -->
+  <div class="card">
+    <div class="card-content">
+      <div class="card-image" >
+      <img src="images/drawers.jpg" alt="Green dresser with decor" class="card-image" />
+      </div>
+      <div class="card-text">
+        <h2 class="card-title">Shift the overall look and feel by adding these wonderful touches to furniture in your home</h2>
+        <p class="card-body">
+          Ever been in a room and felt like something was missing? Perhaps it felt slightly bare and uninviting. I've got some simple tips to help you make any room feel complete.
+        </p>
+
+        <div class="author-share">
+          <div class="card-author">
+            <img src="images/avatar-michelle.jpg" alt="Michelle Appleton" class="author-avatar" />
+            <div class="author-info">
+              <span class="author-name">Michelle Appleton</span>
+              <span class="author-date">28 Jun 2020</span>
+            </div>
+          </div>
+          <div class="share-button" id="shareButton">
+           <img src="images/icon-share.svg" alt="">
+            <div class="share-tooltip" id="shareTooltip">
+              <div><span>SHARE</span></div>
+
+             
+                <div class="icon">
+                 <img src="images/icon-facebook.svg" alt="">
+                 </div>
+                <div class="icon">
+                 <img src="images/icon-pinterest.svg" alt="">
+                </div>
+                <div class="icon">
+                 <img src="images/icon-twitter.svg" alt="">
+                </div>
+         
+            
+          </div>
+                </div>
+        </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Get elements
+    const shareButton = document.getElementById('shareButton');
+    const shareTooltip = document.getElementById('shareTooltip');
+
+    // Add event listeners for tooltip
+    shareButton.addEventListener('mouseenter', () => {
+      shareTooltip.classList.add('active');
+    });
+
+    shareButton.addEventListener('mouseleave', () => {
+      shareTooltip.classList.remove('active');
+    });
+
+    // Optional: Close tooltip if user clicks outside
+    // document.addEventListener('click', (event) => {
+    //   if (!shareButton.contains(event.target) && !shareTooltip.contains(event.target)) {
+    //     shareTooltip.classList.remove('active');
+    //   }
+    // });
+
+    // Optional: Make social icons clickable (example)
+    const socialIcons = document.querySelectorAll('.icon');
+    socialIcons.forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        // e.stopPropagation(); // Prevent closing tooltip
+        alert(`Sharing via this platform...`); // Replace with real logic
+      });
+    });
+  </script>
+
+</body>
+</html>
