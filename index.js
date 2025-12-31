@@ -1,28 +1,56 @@
- // Get elements
-    const shareButton = document.getElementById('shareButton');
-    const shareTooltip = document.getElementById('shareTooltip');
+// Get elements
+const shareButton = document.getElementById("shareButton")
+const shareButtonMobile = document.getElementById("shareButtonMobile")
+const shareTooltip = document.getElementById("shareTooltip")
 
-    // Add event listeners for tooltip
-    shareButton.addEventListener('mouseenter', () => {
-      shareTooltip.classList.add('active');
-    });
+function openShare() {
+  shareButton.classList.add("active")
+  shareTooltip.classList.add("active")
+  shareButton.setAttribute("aria-expanded", "true")
+}
 
-    shareButton.addEventListener('mouseleave', () => {
-      shareTooltip.classList.remove('active');
-    });
+function closeShare() {
+  shareButton.classList.remove("active")
+  shareTooltip.classList.remove("active")
+  shareButton.setAttribute("aria-expanded", "false")
+}
 
-    // Optional: Close tooltip if user clicks outside
-    // document.addEventListener('click', (event) => {
-    //   if (!shareButton.contains(event.target) && !shareTooltip.contains(event.target)) {
-    //     shareTooltip.classList.remove('active');
-    //   }
-    // });
+// Hover for desktop
+shareButton.addEventListener("mouseenter", openShare)
+shareButton.addEventListener("mouseleave", closeShare)
 
-    // Optional: Make social icons clickable (example)
-    const socialIcons = document.querySelectorAll('.icon');
-    socialIcons.forEach(icon => {
-      icon.addEventListener('click', (e) => {
-        // e.stopPropagation(); // Prevent closing tooltip
-        alert(`Sharing via this platform...`); // Replace with real logic
-      });
-    });
+// Keep tooltip open when hovering tooltip itself
+shareTooltip.addEventListener("mouseenter", openShare)
+shareTooltip.addEventListener("mouseleave", closeShare)
+
+// Mobile fallback (still click)
+if (shareButtonMobile) {
+  shareButtonMobile.addEventListener("click", (e) => {
+    e.stopPropagation()
+    shareTooltip.classList.toggle("active")
+    shareButton.classList.toggle("active")
+  })
+}
+
+// Keyboard accessibility
+shareButton.addEventListener("focus", openShare)
+shareButton.addEventListener("blur", closeShare)
+
+// Social icon hover/click
+const socialIcons = document.querySelectorAll(".social-icon")
+socialIcons.forEach((icon) => {
+  icon.addEventListener("click", (e) => {
+    e.stopPropagation()
+    const platform = icon.getAttribute("aria-label")?.replace("Share on ", "")
+    console.log(`Sharing on ${platform}...`)
+    closeShare()
+  })
+})
+
+// Close with Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && shareTooltip.classList.contains("active")) {
+    closeShare()
+    shareButton.focus()
+  }
+})
